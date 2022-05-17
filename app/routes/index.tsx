@@ -1,98 +1,68 @@
 import React from "react";
 import * as use from "react-use";
 
-// Draw it out in fusion and map out the 3 triangles into the hex, factor in "gap"
-function Hexagon({
-  x,
-  y,
+function RhombiiDef({
   gap,
   cellDiameter,
 }: {
-  x: number;
-  y: number;
   gap: number;
   cellDiameter: number;
 }) {
-  return (
-    <>
-      <path
-        fill="black"
-        stroke="0"
-        d={`M
-        ${x.toFixed(3)},${(
-          y +
-          cellDiameter / 2 -
-          (gap / Math.sqrt(3)) * 2
-        ).toFixed(3)}
-    L ${(
-      x +
-      ((cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) / 2) *
-        Math.sqrt(3)
-    ).toFixed(3)},${(
-          y +
-          (cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) /
-            2 +
-          gap / Math.sqrt(3)
-        ).toFixed(3)}
-L ${x.toFixed(3)},${(y + gap / Math.sqrt(3)).toFixed(3)}
+  let pathString = ``;
+
+  // top
+  pathString += `M
+  ${0},${(cellDiameter / 2 - (gap / Math.sqrt(3)) * 2).toFixed(3)}
 L ${(
-          x -
-          ((cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) /
-            2) *
-            Math.sqrt(3)
-        ).toFixed(3)},${(
-          y +
-          (cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) /
-            2 +
-          gap / Math.sqrt(3)
-        ).toFixed(3)}
-z`}
-      />
-      <path
-        clipPath="url(#inner-circle)"
-        fill="black"
-        stroke="0"
-        d={`M
-  ${(x + gap / 2).toFixed(3)},${(y - gap / 2 / Math.sqrt(3)).toFixed(3)}
-L ${(x + (cellDiameter / 4) * Math.sqrt(3) - gap).toFixed(3)},${(
-          y +
-          ((cellDiameter / 4) * Math.sqrt(3) - gap - gap / 2) / Math.sqrt(3) -
-          gap / 2 / Math.sqrt(3)
-        ).toFixed(3)}
-L ${(x + (cellDiameter / 4) * Math.sqrt(3) - gap).toFixed(3)},${(
-          y -
-          cellDiameter / 4 +
-          gap / Math.sqrt(3)
-        ).toFixed(3)}
-L ${(x + gap / 2).toFixed(3)},${
-          y - cellDiameter / 2 + gap / Math.sqrt(3) + (gap / 2) * Math.sqrt(3)
-        }
-z
-      `}
-      />
-      <path
-        fill="black"
-        stroke="0"
-        d={`M
-  ${(x - gap / 2).toFixed(3)},${(y - gap / 2 / Math.sqrt(3)).toFixed(3)}
-L ${(x - (cellDiameter / 4) * Math.sqrt(3) + gap).toFixed(3)},${(
-          y +
-          ((cellDiameter / 4) * Math.sqrt(3) - gap - gap / 2) / Math.sqrt(3) -
-          gap / 2 / Math.sqrt(3)
-        ).toFixed(3)}
-L ${(x - (cellDiameter / 4) * Math.sqrt(3) + gap).toFixed(3)},${(
-          y -
-          cellDiameter / 4 +
-          gap / Math.sqrt(3)
-        ).toFixed(3)}
-L ${(x - gap / 2).toFixed(3)},${
-          y - cellDiameter / 2 + gap / Math.sqrt(3) + (gap / 2) * Math.sqrt(3)
-        }
-z
-      `}
-      />
-    </>
-  );
+    ((cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) / 2) *
+    Math.sqrt(3)
+  ).toFixed(3)},${(
+    (cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) / 2 +
+    gap / Math.sqrt(3)
+  ).toFixed(3)}
+L ${0},${(gap / Math.sqrt(3)).toFixed(3)}
+L ${(
+    -((cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) / 2) *
+    Math.sqrt(3)
+  ).toFixed(3)},${(
+    (cellDiameter / 2 - (gap / Math.sqrt(3)) * 2 - gap / Math.sqrt(3)) / 2 +
+    gap / Math.sqrt(3)
+  ).toFixed(3)}
+z`;
+
+  // bottom right
+  pathString += `M
+${(gap / 2).toFixed(3)},${(-gap / 2 / Math.sqrt(3)).toFixed(3)}
+L ${((cellDiameter / 4) * Math.sqrt(3) - gap).toFixed(3)},${(
+    ((cellDiameter / 4) * Math.sqrt(3) - gap - gap / 2) / Math.sqrt(3) -
+    gap / 2 / Math.sqrt(3)
+  ).toFixed(3)}
+L ${((cellDiameter / 4) * Math.sqrt(3) - gap).toFixed(3)},${(
+    -cellDiameter / 4 +
+    gap / Math.sqrt(3)
+  ).toFixed(3)}
+L ${(gap / 2).toFixed(3)},${
+    -cellDiameter / 2 + gap / Math.sqrt(3) + (gap / 2) * Math.sqrt(3)
+  }
+z`;
+
+  // bottom left
+  pathString += `M
+${(-gap / 2).toFixed(3)},${(-gap / 2 / Math.sqrt(3)).toFixed(3)}
+L ${(-(cellDiameter / 4) * Math.sqrt(3) + gap).toFixed(3)},${(
+    ((cellDiameter / 4) * Math.sqrt(3) - gap - gap / 2) / Math.sqrt(3) -
+    gap / 2 / Math.sqrt(3)
+  ).toFixed(3)}
+L ${(-(cellDiameter / 4) * Math.sqrt(3) + gap).toFixed(3)},${(
+    -cellDiameter / 4 +
+    gap / Math.sqrt(3)
+  ).toFixed(3)}
+L ${(-gap / 2).toFixed(3)},${
+    -cellDiameter / 2 + gap / Math.sqrt(3) + (gap / 2) * Math.sqrt(3)
+  }
+z`;
+
+  return <path id="rhombii" fill="black" stroke="0" d={pathString} />;
 }
 
 function hexToPixel(
@@ -143,10 +113,10 @@ export default function Index() {
   const [falsyGap, setGap] = use.useLocalStorage("gap", 1);
   let gap = falsyGap ?? 11;
 
-  diameter = 1000;
-  cellDiameter = 7;
+  diameter = 500;
+  cellDiameter = 50;
   outerThickness = 1.6;
-  gap = 0.8;
+  gap = 2;
   let padding = 20;
 
   return (
@@ -271,7 +241,7 @@ function ClockHand({
   padding: number;
 }) {
   let handDiameter = 28 * 2;
-  let handLength = isHourHand ? 180 : 360;
+  let handLength = isHourHand ? 90 : 180;
   let handGap = 1.6;
 
   return (
@@ -282,6 +252,7 @@ function ClockHand({
       viewBox={`0 0 ${diameter + padding * 2} ${diameter + padding * 2}`}
     >
       <defs>
+        <RhombiiDef cellDiameter={cellDiameter} gap={gap} />
         <mask id={`hole${isHourHand ? "Hour" : "Minute"}`}>
           <circle
             fill="white"
@@ -289,15 +260,13 @@ function ClockHand({
             cy={diameter / 2 + padding}
             r={diameter / 2}
           />
-
           {generateHexGrid(diameter / 2, cellDiameter / 2, gap).map(
             ([x, y]) => (
-              <Hexagon
-                gap={gap}
-                key={`${x}${y}`}
+              <use
+                key={`${x}/${y}`}
+                href="#rhombii"
                 x={x + padding}
                 y={y + padding}
-                cellDiameter={cellDiameter}
               />
             )
           )}
